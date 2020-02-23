@@ -2,6 +2,7 @@ package com.iti.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -112,6 +113,7 @@ public class SearchActivity extends AppCompatActivity {
                     replyIntent.putExtra(EXTRA_TITLE, movie.getTitle());
                     replyIntent.putExtra(EXTRA_RELEASE_DATE, movie.getReleaseYearFromDate());
                     replyIntent.putExtra(EXTRA_POSTER_PATH, movie.getPosterPath());
+                    Log.d(TAG, "onItemClick: " + movie.getPosterPath());
                     setResult(-1, replyIntent);
                     finish();
                 }
