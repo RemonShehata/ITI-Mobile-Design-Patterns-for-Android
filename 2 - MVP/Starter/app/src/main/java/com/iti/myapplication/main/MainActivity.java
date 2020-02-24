@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     public void displayMovies(List<Movie> movieList) {
         moviesRecyclerView.setVisibility(VISIBLE);
         noMovies.setVisibility(INVISIBLE);
-        mainPresenter.getMyMoviesList();
+        //mainPresenter.getMyMoviesList();
 
         adapter = new MainAdapter(movieList, this);
         layoutManager = new LinearLayoutManager(this);

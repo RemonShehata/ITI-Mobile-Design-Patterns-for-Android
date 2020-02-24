@@ -21,7 +21,12 @@ public class MainPresenter implements MainContract.PresenterInterface {
 
     @Override
     public void getMyMoviesList() {
-        mainView.displayMovies(db.allMovies());
+        List<Movie> movieList = db.allMovies();
+        if (movieList == null || movieList.size() == 0) {
+            mainView.displayNoMovies();
+        } else {
+            mainView.displayMovies(movieList);
+        }
 
     }
 
