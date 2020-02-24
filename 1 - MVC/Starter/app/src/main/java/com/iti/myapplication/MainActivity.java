@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         movieDaoList = new ArrayList<>();
         db = new LocalDataSource(getApplication());
-        movieDaoList = db.allMovies();
         displayResults();
     }
 
@@ -64,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayResults() {
+        movieDaoList = db.allMovies();
         if (movieDaoList == null || movieDaoList.size() == 0) {
             noMovies.setVisibility(VISIBLE);
             moviesRecyclerView.setVisibility(View.INVISIBLE);
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Toast.makeText(this, "delete", Toast.LENGTH_SHORT).show();
-        for (Movie movie : moviesToDelete) {
+        for (Movie movie : MainAdapter.getSelectedMovies()) {
             db.delete(movie);
         }
         displayResults();

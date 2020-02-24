@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.iti.myapplication.model.Movie;
 import com.iti.myapplication.network.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MoviesHolder> 
     private Context context;
     private List<Movie> movieList;
     private Movie currentMovie;
+    private static List<Movie> selectedMovies = new ArrayList<>();
 
     MainAdapter(List<Movie> movieList, Context context) {
         this.movieList = movieList;
@@ -48,6 +51,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MoviesHolder> 
                 .load(RetrofitClient.TMDB_IMAGEURL + currentMovie.getPosterPath())
                 .placeholder(R.drawable.ic_local_movies_gray)
                 .into(holder.movieImage);
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    selectedMovies.add(movieList.get(position));
+                } else {
+                    selectedMovies.remove(movieList.get(position));
+                }
+            }
+        });
     }
 
     @Override
@@ -71,9 +85,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MoviesHolder> 
             movieImage = itemView.findViewById(R.id.movie_imageview);
             releaseDate = itemView.findViewById(R.id.release_date_textview);
             movieTitle = itemView.findViewById(R.id.title_textview);
-            //checkBox = itemView.findViewById(R.id.)
+            checkBox = itemView.findViewById(R.id.checkbox);
         }
     }
 
-
+    public static List<Movie> getSelectedMovies() {
+        return selectedMovies;
+    }
 }
